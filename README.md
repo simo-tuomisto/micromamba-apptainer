@@ -22,7 +22,11 @@ For `apptainer`:
 apptainer build my_env.sif micromamba_bootstrapper.def
 ```
 
-For `singularity`:
+To run the image
+For `apptainer`:
 ```console
-singularity build my_env.sif micromamba_bootstrapper.def
+apptainer run my_env.sif python -c 'import numpy as np; print(np.__version__)'
 ```
+
+
+For `singularity`, just swap `apptainer` to `singularity`.
