@@ -1,0 +1,10 @@
+Bootstrap: docker
+From: mambaorg/micromamba:latest
+
+%files
+environment.yml /opt
+
+%post
+    micromamba install -y -n base -f /opt/environment.yml
+
+    micromamba clean --all --yes
