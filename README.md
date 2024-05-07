@@ -1,10 +1,22 @@
 # Micromamba Apptainer
 
-This small definition file can be used to create a conda environment in an apptainer / singularity container.
+This small definition file can be used to create a conda environment in
+an apptainer / singularity container.
+
+Givent `environment.yml` is combined with the `micromamba_apptainer.def`
+definition file to create a SIF-image:
+
+```mermaid
+  graph TD;
+      E[environment.yml]-->S[my_environment.sif];
+      D[micromamba_apptainer.def]-->S[my_environment.sif];
+```
 
 ## Example
 
-Create a `environment.yml` file with all needed channels present. Name the environment `base`
+Create a `environment.yml` file with all needed channels and dependencies
+present. Name the environment `base`. This is important as all packages
+will be installed to the base environment.
 
 ```yml
 name: base
@@ -19,14 +31,16 @@ Create an apptainer image with the bootstrapping definition.
 
 For `apptainer`:
 ```console
-apptainer build my_env.sif micromamba_bootstrapper.def
+apptainer build my_environment.sif micromamba_apptainer.def
 ```
 
-To run the image
-For `apptainer`:
+You can run ``python`` from the the image with ``apptainer run``:
 ```console
-apptainer run my_env.sif python -c 'import numpy as np; print(np.__version__)'
+apptainer run my_environment.sif python -c 'import numpy as np; print(np.__version__)'
 ```
 
+``apptainer run`` automatically activates the ``base``-environment.
 
-For `singularity`, just swap `apptainer` to `singularity`.
+## Singularity usage
+
+If you're using `singularity`, just swap `apptainer` to `singularity` in all commands.
